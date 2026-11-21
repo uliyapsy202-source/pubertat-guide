@@ -2,41 +2,31 @@
 <html lang="ru" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ПУБЕРТАТ 2.0 // System Update Guide</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПУБЕРТАТ 2.0: Инструкция к обновлению</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts: Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Orbitron:wght@600;800;900&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        cyber: {
-                            bg: '#0d0f17',
-                            card: '#131724',
-                            cardAlt: '#1a2032',
-                            neonPink: '#ff2a85',
-                            neonGreen: '#05ffa1',
-                            neonBlue: '#00e5ff',
-                            neonPurple: '#a855f7',
-                            neonYellow: '#ffe600',
-                            textMuted: '#94a3b8'
-                        }
+                        cyberBg: '#0d0f17',
+                        cyberCard: '#141827',
+                        cyberCardInner: '#0f1320',
+                        neonCyan: '#00f3ff',
+                        neonPink: '#ff007f',
+                        neonLime: '#39ff14',
+                        neonPurple: '#b829ff'
                     },
                     fontFamily: {
-                        display: ['Orbitron', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', 'monospace'],
-                        body: ['Rubik', 'sans-serif']
-                    },
-                    boxShadow: {
-                        'neon-pink': '0 0 25px rgba(255, 42, 133, 0.4)',
-                        'neon-green': '0 0 25px rgba(5, 255, 161, 0.4)',
-                        'neon-blue': '0 0 25px rgba(0, 229, 255, 0.4)',
-                        'neon-purple': '0 0 25px rgba(168, 85, 247, 0.4)'
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace']
                     }
                 }
             }
@@ -44,679 +34,1308 @@
     </script>
 
     <style>
+        /* Base Cyberpunk Background */
         body {
             background-color: #0d0f17;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(168, 85, 247, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 45%),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+            background-image:
+                radial-gradient(circle at 10% 10%, rgba(0, 243, 255, 0.09) 0%, transparent 40%),
+                radial-gradient(circle at 90% 30%, rgba(255, 0, 127, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 85%, rgba(57, 255, 20, 0.06) 0%, transparent 45%),
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+            color: #f1f5f9;
+            overflow-x: hidden;
         }
 
-        .hud-frame {
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            border-radius: 12px;
+        /* HUD Card Styling */
+        .hud-card {
+            background: rgba(20, 24, 39, 0.92);
+            border: 1px solid rgba(0, 243, 255, 0.25);
+            border-radius: 20px;
             position: relative;
-            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .hud-frame::before {
+        .hud-card.level-unlocked {
+            border-color: rgba(57, 255, 20, 0.45);
+        }
+        .hud-card::before {
             content: '';
             position: absolute;
             top: -1px;
-            left: 14px;
-            width: 32px;
+            left: 20px;
+            width: 44px;
             height: 2px;
-            background: #00e5ff;
-            box-shadow: 0 0 8px #00e5ff;
+            background: #00f3ff;
+            box-shadow: 0 0 10px #00f3ff;
+            border-radius: 2px;
         }
-
-        .hud-frame::after {
+        .hud-card::after {
             content: '';
             position: absolute;
             bottom: -1px;
-            right: 14px;
-            width: 32px;
+            right: 20px;
+            width: 44px;
             height: 2px;
-            background: #ff2a85;
-            box-shadow: 0 0 8px #ff2a85;
+            background: #ff007f;
+            box-shadow: 0 0 10px #ff007f;
+            border-radius: 2px;
+        }
+
+        /* Vertical 9:16 Image Styling */
+        .level-media {
+            width: 100%;
+            max-width: 360px;
+            border-radius: 18px;
+            display: block;
+            margin: 0 auto 18px;
+            border: 1.5px solid rgba(0, 243, 255, 0.4);
+            box-shadow: 0 0 22px rgba(0, 243, 255, 0.18), 0 10px 25px rgba(0, 0, 0, 0.5);
+            object-fit: cover;
+            background: #0f1320;
+        }
+        .level-media-pink {
+            border-color: rgba(255, 0, 127, 0.45);
+            box-shadow: 0 0 22px rgba(255, 0, 127, 0.2), 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        .level-media-lime {
+            border-color: rgba(57, 255, 20, 0.45);
+            box-shadow: 0 0 22px rgba(57, 255, 20, 0.18), 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Glowing CTA Button */
+        .btn-glow-pink {
+            background: linear-gradient(135deg, #ff007f, #b829ff);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.45);
+        }
+        .btn-glow-lime {
+            background: linear-gradient(135deg, #39ff14, #00f3ff);
+            box-shadow: 0 0 22px rgba(57, 255, 20, 0.45);
+        }
+        .btn-glow-cyan {
+            background: linear-gradient(135deg, #00f3ff, #2563eb);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
         }
 
         /* Custom Range Slider */
-        input[type="range"]::-webkit-slider-thumb {
+        input[type="range"].cyber-slider {
             -webkit-appearance: none;
-            height: 24px;
-            width: 24px;
-            border-radius: 6px;
-            background: #00e5ff;
+            appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #ff007f 0%, #00f3ff 50%, #39ff14 100%);
+            outline: none;
+        }
+        input[type="range"].cyber-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 3px solid #00f3ff;
+            box-shadow: 0 0 14px #00f3ff;
             cursor: pointer;
-            box-shadow: 0 0 12px #00e5ff;
-            border: 2px solid #ffffff;
+        }
+        input[type="range"].cyber-slider::-moz-range-thumb {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 3px solid #00f3ff;
+            box-shadow: 0 0 14px #00f3ff;
+            cursor: pointer;
         }
 
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.02); }
+        /* Animations */
+        @keyframes blinkRed {
+            0%, 100% { opacity: 1; box-shadow: 0 0 14px rgba(255, 0, 85, 0.7); }
+            50% { opacity: 0.45; box-shadow: 0 0 4px rgba(255, 0, 85, 0.2); }
         }
-        .pulse-glow {
-            animation: pulseGlow 2.4s infinite ease-in-out;
+        .blink-danger {
+            animation: blinkRed 1.2s infinite ease-in-out;
+        }
+
+        @keyframes floatGerm {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-5px) rotate(3deg); }
+        }
+        .germ-float {
+            animation: floatGerm 2s infinite ease-in-out;
+        }
+
+        @keyframes shieldPulse {
+            0% { box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.65); }
+            70% { box-shadow: 0 0 0 18px rgba(57, 255, 20, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(57, 255, 20, 0); }
+        }
+        .shield-active {
+            animation: shieldPulse 1.5s infinite;
+        }
+
+        @keyframes popParticle {
+            0% { transform: scale(0.4); opacity: 1; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
+        .zap-burst {
+            animation: popParticle 0.45s forwards ease-out;
+        }
+
+        /* Print Styles for clean PDF Export */
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #111827 !important;
+            }
+            header, #confettiCanvas, #toastBox, button, .no-print {
+                display: none !important;
+            }
+            main {
+                padding-top: 0 !important;
+                max-width: 100% !important;
+            }
+            .hud-card {
+                background: #ffffff !important;
+                border: 1px solid #d1d5db !important;
+                box-shadow: none !important;
+                color: #111827 !important;
+                break-inside: avoid;
+                margin-bottom: 20px;
+            }
+            .hud-card::before, .hud-card::after {
+                display: none !important;
+            }
+            h1, h2, h3, p, span, li {
+                color: #111827 !important;
+            }
+            .level-media {
+                max-width: 260px !important;
+                box-shadow: none !important;
+                border: 1px solid #cbd5e1 !important;
+            }
         }
     </style>
 </head>
-<body class="font-body text-slate-100 antialiased selection:bg-cyber-neonPink selection:text-white">
+<body class="font-sans antialiased selection:bg-neonPink selection:text-white">
 
-    <!-- Top Floating HUD Status Bar -->
-    <header class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-cyber-bg/95 border-b border-cyber-neonBlue/25 px-4 py-3">
-        <div class="max-w-md mx-auto flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <span class="inline-block w-2.5 h-2.5 rounded-full bg-cyber-neonGreen animate-pulse"></span>
-                <span class="font-display text-xs tracking-wider text-cyber-neonBlue font-bold">PUBERTAT_OS 2.0</span>
-            </div>
-            <div class="flex items-center space-x-3 text-xs font-mono">
-                <span id="progressText" class="text-cyber-neonGreen font-semibold">0 / 10 LVL</span>
-                <button id="soundToggle" onclick="toggleMute()" class="px-2.5 py-1 bg-cyber-cardAlt border border-cyber-neonBlue/40 rounded-lg text-cyber-neonBlue hover:bg-cyber-neonBlue/10 transition">
-                    🔊 SFX
-                </button>
-            </div>
+    <!-- Fullscreen Confetti Canvas -->
+    <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+    <!-- Custom Toast Notification (replaces alert) -->
+    <div id="toastBox" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 translate-y-4 w-[90%] max-w-sm">
+        <div id="toastContent" class="bg-cyberCard/95 border border-neonCyan text-white text-xs font-mono px-4 py-3 rounded-xl shadow-[0_0_20px_rgba(0,243,255,0.35)] text-center">
+            Скопировано!
         </div>
-        <!-- Progress Bar Under Nav -->
-        <div class="max-w-md mx-auto w-full bg-slate-900 h-1.5 mt-2 rounded-full overflow-hidden border border-slate-800">
-            <div id="topProgressBar" class="h-full bg-gradient-to-r from-cyber-neonPink via-cyber-neonPurple to-cyber-neonGreen w-0 transition-all duration-300"></div>
+    </div>
+
+    <!-- Sticky Top HUD Header -->
+    <header class="sticky top-0 z-40 backdrop-blur-lg bg-cyberBg/90 border-b border-neonCyan/25 px-4 py-3">
+        <div class="max-w-md mx-auto">
+            <div class="flex items-center justify-between gap-2">
+                <a href="#hero" class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-neonLime shadow-[0_0_8px_#39ff14] animate-pulse"></span>
+                    <span class="font-mono font-extrabold text-sm tracking-wider text-white">ПУБЕРТАТ <span class="text-neonCyan">2.0</span></span>
+                </a>
+
+                <div class="flex items-center gap-2.5">
+                    <div class="px-2.5 py-1 rounded-lg bg-cyberCard border border-neonLime/40 font-mono text-xs font-bold text-neonLime" id="hudLevelCounter">
+                        0/10 LVL
+                    </div>
+                    <button id="sfxToggleBtn" onclick="toggleSfx()" aria-label="Переключить звук" class="px-2.5 py-1 rounded-lg bg-cyberCard border border-neonCyan/40 font-mono text-xs font-bold text-neonCyan hover:bg-neonCyan/10 active:scale-95 transition">
+                        🔊 SFX
+                    </button>
+                </div>
+            </div>
+            <!-- Glowing Progress Bar -->
+            <div class="w-full h-1.5 bg-slate-900 rounded-full mt-2.5 overflow-hidden border border-slate-800">
+                <div id="hudProgressBar" class="h-full w-0 bg-gradient-to-r from-neonPink via-neonCyan to-neonLime shadow-[0_0_10px_#00f3ff] transition-all duration-500"></div>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-md mx-auto px-4 pt-20 pb-28 space-y-7">
+    <!-- Main Mobile-First Container -->
+    <main class="max-w-md mx-auto px-4 pt-6 pb-20 space-y-7">
 
-        <!-- HERO / COVER -->
-        <section class="hud-frame bg-cyber-card p-6 text-center space-y-4 shadow-neon-blue">
-            <div class="inline-block bg-cyber-neonPink/20 text-cyber-neonPink border border-cyber-neonPink px-3 py-1 text-xs font-mono rounded-full tracking-wider uppercase">
-                Глобальное обновление системы
+        <!-- HERO SECTION -->
+        <section id="hero" class="hud-card p-5 text-center space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neonPink/15 border border-neonPink/50 text-neonPink font-mono text-[11px] font-bold uppercase tracking-wider">
+                <span>⚡</span> SYSTEM UPDATE 10+
             </div>
-            <h1 class="text-3xl font-display font-extrabold tracking-tight text-white leading-tight">
-                ПУБЕРТАТ <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-neonGreen via-cyber-neonBlue to-cyber-neonPink">2.0</span>
+
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
+                ПУБЕРТАТ <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonCyan via-neonPink to-neonLime">2.0</span>:<br>
+                ИНСТРУКЦИЯ К ОБНОВЛЕНИЮ
             </h1>
-            <p class="text-cyber-textMuted text-xs font-mono leading-relaxed">
-                Руководство по выживанию для подростков 10+ лет и их родителей. Без стыда, кринжа и скучных лекций.
+
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Твое тело скачивает главное обновление в жизни. Спокойно — это не баг, это прокачка.
             </p>
 
-            <div class="p-3.5 bg-cyber-bg/90 border border-slate-800 rounded-xl text-left text-xs font-mono space-y-1.5">
-                <p class="text-cyber-neonGreen">> СТАТУС: Загрузка файлов трансформации...</p>
-                <p class="text-cyber-neonBlue">> ЦЕЛЬ: Сборка взрослого режима</p>
-                <p class="text-cyber-neonYellow">> УПРАВЛЕНИЕ: Гормональный пул активен</p>
+            <!-- Hero Animated Cover GIF -->
+            <div class="pt-1">
+                <img
+                    src="cover.gif"
+                    alt="Пубертат 2.0 Обложка"
+                    class="level-media"
+                    onerror="this.onerror=null; this.src='https://placehold.co/360x640/141827/00f3ff?text=ПУБЕРТАТ+2.0%0Acover.gif';"
+                >
             </div>
 
-            <button onclick="scrollToLevel('lvl1'); playClickSound();" class="w-full py-3.5 bg-gradient-to-r from-cyber-neonPink to-cyber-neonPurple text-white font-display font-bold text-xs tracking-widest uppercase rounded-xl shadow-neon-pink hover:opacity-95 active:scale-95 transition">
-                🚀 Начать распаковку
-            </button>
+            <a href="#level-1" onclick="playClick()" class="btn-glow-pink block w-full py-3.5 px-5 rounded-xl font-mono font-bold text-sm text-white tracking-wide hover:brightness-110 active:scale-95 transition">
+                Погнали разбираться ↓
+            </a>
         </section>
 
         <!-- LEVEL 1 -->
-        <section id="lvl1" class="hud-frame bg-cyber-card p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <span class="text-xs font-mono text-cyber-neonPink font-bold">LEVEL 01 // CORE</span>
-                <span class="text-[10px] bg-cyber-neonPink/20 text-cyber-neonPink px-2 py-0.5 rounded font-mono">РАСПАКОВКА</span>
+        <section id="level-1" data-level="1" class="hud-card p-5 space-y-4">
+            <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-bold text-neonCyan tracking-wider">LEVEL 01 // СТАРТ</span>
+                <span class="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-neonCyan/15 text-neonCyan border border-neonCyan/30">СИСТЕМА</span>
             </div>
-            <h2 class="text-lg font-display font-bold text-white">Загрузка обновления: Пубертат 2.0</h2>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                Прямо сейчас твое тело скачивает самое масштабное обновление в твоей жизни. Называется оно «пубертат». Это не баг и не поломка — это глобальная перестройка всей системы. Управляют этим гормоны-админы: они нажимают кнопки на пульте со сверхскоростью!
+
+            <h2 class="text-xl font-extrabold text-white leading-snug">Загрузка обновления: Пубертат 2.0</h2>
+
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Прямо сейчас твое тело скачивает самое масштабное обновление — <strong class="text-white">пубертат</strong>. Управляют им гормоны: представь их как суетологов-админов, которые бегают по серверной, жмут на все кнопки сразу и кричат «срочно в прод!».
+            </p>
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Из-за этого всё вокруг может казаться странным. Выдыхай: отменить апдейт нельзя, но с ним можно жить кайфово.
             </p>
 
-            <!-- Interactive Download -->
-            <div class="bg-cyber-bg p-4 rounded-xl border border-slate-800 space-y-3">
-                <div class="flex justify-between text-xs font-mono text-cyber-textMuted">
-                    <span>Пакет гормональных фич:</span>
-                    <span id="lvl1ProgressVal" class="text-cyber-neonGreen font-bold">45%</span>
+            <!-- Interactive Progress Bar -->
+            <div class="bg-cyberCardInner border border-slate-800 rounded-2xl p-4 space-y-3">
+                <div class="flex items-center justify-between font-mono text-xs">
+                    <span class="text-slate-300">Распаковка гормонов</span>
+                    <span id="hormonePercent" class="text-neonLime font-bold">20%</span>
                 </div>
-                <div class="w-full bg-slate-900 h-3 rounded-full overflow-hidden p-0.5 border border-slate-800">
-                    <div id="lvl1Bar" class="bg-gradient-to-r from-cyber-neonBlue to-cyber-neonGreen h-full rounded-full transition-all duration-300" style="width: 45%;"></div>
+                <div class="w-full h-3.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800 p-0.5">
+                    <div id="hormoneBar" class="h-full rounded-full bg-gradient-to-r from-neonCyan to-neonLime transition-all duration-300" style="width: 20%;"></div>
                 </div>
-                <button onclick="boostInstall(); playClickSound();" class="w-full py-2.5 bg-cyber-cardAlt border border-cyber-neonGreen/60 text-cyber-neonGreen text-xs font-mono rounded-lg hover:bg-cyber-neonGreen/10 active:scale-95 transition">
-                    ⚡ Ускорить распаковку (+15%)
-                </button>
-            </div>
-            <div class="flex items-center justify-between pt-2">
-                <span class="text-xs text-cyber-textMuted font-mono">Глава пройдена?</span>
-                <button onclick="completeLevel(1, this)" class="level-chk-btn text-xs font-mono px-3 py-1.5 rounded-lg bg-cyber-neonGreen/20 text-cyber-neonGreen border border-cyber-neonGreen/40 hover:bg-cyber-neonGreen hover:text-black transition">
-                    ✓ Готово (+XP)
+                <p id="hormoneStatus" class="font-mono text-xs text-neonCyan min-h-[2.2rem] flex items-center">
+                    > Админы-гормоны пьют кофе и готовят апдейт...
+                </p>
+                <button onclick="boostHormones()" class="w-full py-3 rounded-xl bg-cyberCard border border-neonLime/60 text-neonLime font-mono font-bold text-xs hover:bg-neonLime/10 active:scale-95 transition">
+                    Ускорить загрузку ⚡
                 </button>
             </div>
         </section>
 
         <!-- LEVEL 2 -->
-        <section id="lvl2" class="hud-frame bg-cyber-card p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <span class="text-xs font-mono text-cyber-neonBlue font-bold">LEVEL 02 // MOOD</span>
-                <span class="text-[10px] bg-cyber-neonBlue/20 text-cyber-neonBlue px-2 py-0.5 rounded font-mono">РЕАКЦИИ</span>
+        <section id="level-2" data-level="2" class="hud-card p-5 space-y-4">
+            <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-bold text-neonPink tracking-wider">LEVEL 02 // ЭМОЦИИ</span>
+                <span class="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-neonPink/15 text-neonPink border border-neonPink/30">КАЧЕЛИ</span>
             </div>
-            <h2 class="text-lg font-display font-bold text-white">Эмоциональные качели</h2>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                Вчера хотелось захватить мир, а сегодня — лежать лицом в подушку? Мозг тоже перестраивается, особенно зона эмоций. Реагировать острее на пустяки — нормальный процесс калибровки. Ты не злой и не сошел с ума.
+
+            <h2 class="text-xl font-extrabold text-white leading-snug">Эмоциональные качели</h2>
+
+            <img
+                src="level-2.jpg"
+                alt="Эмоциональные качели"
+                class="level-media level-media-pink"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://placehold.co/360x640/141827/ff007f?text=LEVEL+2%0Alevel-2.jpg';"
+            >
+
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Вчера хотелось захватить мир, а сегодня — лежать лицом в подушку и никого не видеть? Твой мозг прямо сейчас перепрошивается, особенно зона эмоций, поэтому любая мелочь может казаться катастрофой галактического масштаба. Ты не сходишь с ума — нервная система просто учится жить на новых мощностях.
             </p>
 
-            <!-- Mood Tracker Interactive -->
-            <div class="bg-cyber-bg p-4 rounded-xl border border-slate-800 space-y-3">
-                <div class="flex justify-between text-xs font-mono text-cyber-textMuted">
-                    <span>Шкала калибровки эмоций:</span>
-                    <span id="sliderValLabel" class="text-cyber-neonBlue font-bold">50%</span>
+            <!-- Interactive Mood Slider -->
+            <div class="bg-cyberCardInner border border-slate-800 rounded-2xl p-4 space-y-3.5">
+                <div class="flex items-center justify-between font-mono text-xs">
+                    <span class="text-slate-400">Твой настрой сейчас:</span>
+                    <span id="moodPercent" class="text-neonCyan font-bold">50%</span>
                 </div>
-                <input id="moodSlider" type="range" min="0" max="100" value="50" oninput="updateMood(this.value)" class="w-full bg-slate-900 h-2.5 rounded-lg cursor-pointer">
-                <div id="moodStatus" class="p-3 rounded-lg bg-cyber-cardAlt text-center font-mono text-xs border border-cyber-neonBlue/40 text-cyber-neonBlue transition-all">
-                    ⚖️ Баланс: Спокойный нейтралитет и чилл
+
+                <input
+                    id="moodSlider"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="50"
+                    oninput="updateMoodSlider(this.value)"
+                    class="cyber-slider"
+                >
+
+                <div class="flex justify-between text-[11px] font-mono text-slate-500">
+                    <span>🌧️ Дно</span>
+                    <span>🎢 Качает</span>
+                    <span>☀️ Космос</span>
                 </div>
-            </div>
-            <div class="flex items-center justify-between pt-2">
-                <span class="text-xs text-cyber-textMuted font-mono">Глава пройдена?</span>
-                <button onclick="completeLevel(2, this)" class="level-chk-btn text-xs font-mono px-3 py-1.5 rounded-lg bg-cyber-neonGreen/20 text-cyber-neonGreen border border-cyber-neonGreen/40 hover:bg-cyber-neonGreen hover:text-black transition">
-                    ✓ Готово (+XP)
-                </button>
+
+                <div id="moodCard" class="p-3.5 rounded-xl bg-cyberCard border border-neonCyan/40 space-y-1.5 transition-all">
+                    <div id="moodTitle" class="font-mono font-bold text-xs text-neonCyan">
+                        🎢 Качает туда-сюда
+                    </div>
+                    <p id="moodTip" class="text-xs text-slate-300 leading-relaxed">
+                        Совет: когда эмоции скачут, сделай 5 глубоких вдохов, попей воды или включи любимый трек. Это временно!
+                    </p>
+                </div>
             </div>
         </section>
 
         <!-- LEVEL 3 -->
-        <section id="lvl3" class="hud-frame bg-cyber-card p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <span class="text-xs font-mono text-cyber-neonPink font-bold">LEVEL 03 // GIRLS</span>
-                <span class="text-[10px] bg-cyber-neonPink/20 text-cyber-neonPink px-2 py-0.5 rounded font-mono">ДЛЯ ДЕВЧОНОК</span>
+        <section id="level-3" data-level="3" class="hud-card p-5 space-y-4">
+            <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-bold text-neonPink tracking-wider">LEVEL 03 // ДЕВЧОНКИ</span>
+                <span class="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-neonPink/15 text-neonPink border border-neonPink/30">СЕКРЕТНЫЙ УРОВЕНЬ</span>
             </div>
-            <h2 class="text-lg font-display font-bold text-white">Девчонки: Секретный уровень</h2>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                Фигура меняется: бедра могут стать шире, растет грудь (и может слегка побаливать). Месячные — это признак того, что организм работает как часы. Матка готовит «перинку» каждый месяц, и если она не нужна, планово ее обновляет.
+
+            <h2 class="text-xl font-extrabold text-white leading-snug">Девчонки: Секретный уровень</h2>
+
+            <img
+                src="level-3.jpg"
+                alt="Девчонки: Секретный уровень"
+                class="level-media level-media-pink"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://placehold.co/360x640/141827/ff007f?text=LEVEL+3%0Alevel-3.jpg';"
+            >
+
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Фигура начинает меняться: бедра могут стать шире, растет грудь — и иногда она слегка побаливает, это нормально. А еще приходят месячные: каждый месяц организм готовит мягкую «перинку» внутри, а если она не пригодилась — аккуратно ее обновляет. Это не болезнь и не стыд, а знак, что всё работает как часы.
             </p>
 
-            <!-- Accordion & Backpack Checklist -->
+            <!-- Accordion FAQ -->
             <div class="space-y-2.5">
-                <button onclick="toggleAccordion('girlsAccordion', 'girlsArrow'); playClickSound();" class="w-full text-left p-3 rounded-xl bg-cyber-cardAlt border border-cyber-neonPink/40 flex justify-between items-center text-xs font-mono text-cyber-neonPink">
-                    <span>🎒 Чек-лист: секретный лут в рюкзак</span>
-                    <span id="girlsArrow" class="font-bold">▼</span>
+                <button onclick="toggleFaq()" class="w-full p-3.5 rounded-xl bg-cyberCardInner border border-neonPink/45 flex items-center justify-between text-left font-mono text-xs font-bold text-neonPink hover:bg-neonPink/10 transition">
+                    <span>💡 Частый вопрос: а если больно или неудобно?</span>
+                    <span id="faqArrow" class="ml-2 transition-transform">▼</span>
                 </button>
-                <div id="girlsAccordion" class="hidden p-3.5 bg-cyber-bg border border-slate-800 rounded-xl text-xs text-slate-300 space-y-2 font-mono">
-                    <label class="flex items-center space-x-2 cursor-pointer">
-                        <input type="checkbox" onchange="playClickSound()" class="accent-cyber-neonPink rounded">
-                        <span>2 прокладки в боковом кармане</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer">
-                        <input type="checkbox" onchange="playClickSound()" class="accent-cyber-neonPink rounded">
-                        <span>Влажные гигиенические салфетки</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer">
-                        <input type="checkbox" onchange="playClickSound()" class="accent-cyber-neonPink rounded">
-                        <span>Удобное трекер-приложение в телефоне</span>
-                    </label>
-                    <p class="text-[11px] text-cyber-textMuted pt-1">💡 Мама, старшая сестра или школьный врач всегда помогут, если цикл застал врасплох.</p>
+                <div id="faqContent" class="hidden p-4 rounded-xl bg-cyberCardInner border border-slate-800 text-xs text-slate-300 leading-relaxed space-y-2">
+                    <p>Легкий дискомфорт внизу живота в первые дни бывает у многих. Помогают теплая грелка, спокойный отдых, теплая вода и удобная одежда.</p>
+                    <p class="text-neonCyan font-medium">Важно: если боль сильная и мешает жить — не терпи! Обязательно скажи маме, старшей сестре или врачу, они помогут подобрать безопасное решение.</p>
                 </div>
             </div>
-            <div class="flex items-center justify-between pt-2">
-                <span class="text-xs text-cyber-textMuted font-mono">Глава пройдена?</span>
-                <button onclick="completeLevel(3, this)" class="level-chk-btn text-xs font-mono px-3 py-1.5 rounded-lg bg-cyber-neonGreen/20 text-cyber-neonGreen border border-cyber-neonGreen/40 hover:bg-cyber-neonGreen hover:text-black transition">
-                    ✓ Готово (+XP)
-                </button>
+
+            <!-- Interactive Checklist -->
+            <div class="bg-cyberCardInner border border-slate-800 rounded-2xl p-4 space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="font-mono text-xs font-bold text-white">🎒 Секретный лут в рюкзак</span>
+                    <span id="lootCount" class="font-mono text-xs text-neonLime font-bold">0/4</span>
+                </div>
+                <div class="space-y-2 text-sm text-slate-200">
+                    <label class="flex items-center gap-3 p-2.5 rounded-xl bg-cyberCard border border-slate-800 cursor-pointer hover:border-neonPink/40 transition">
+                        <input type="checkbox" onchange="updateLootCount()" class="loot-chk w-4 h-4 accent-neonPink rounded">
+                        <span>Прокладки (2–3 штуки в косметичке)</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-2.5 rounded-xl bg-cyberCard border border-slate-800 cursor-pointer hover:border-neonPink/40 transition">
+                        <input type="checkbox" onchange="updateLootCount()" class="loot-chk w-4 h-4 accent-neonPink rounded">
+                        <span>Влажные салфетки</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-2.5 rounded-xl bg-cyberCard border border-slate-800 cursor-pointer hover:border-neonPink/40 transition">
+                        <input type="checkbox" onchange="updateLootCount()" class="loot-chk w-4 h-4 accent-neonPink rounded">
+                        <span>Бутылка чистой воды</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-2.5 rounded-xl bg-cyberCard border border-slate-800 cursor-pointer hover:border-neonPink/40 transition">
+                        <input type="checkbox" onchange="updateLootCount()" class="loot-chk w-4 h-4 accent-neonPink rounded">
+                        <span>Запасное белье (на всякий случай)</span>
+                    </label>
+                </div>
             </div>
         </section>
 
         <!-- LEVEL 4 -->
-        <section id="lvl4" class="hud-frame bg-cyber-card p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <span class="text-xs font-mono text-cyber-neonGreen font-bold">LEVEL 04 // BOYS</span>
-                <span class="text-[10px] bg-cyber-neonGreen/20 text-cyber-neonGreen px-2 py-0.5 rounded font-mono">ДЛЯ ПАЦАНОВ</span>
+        <section id="level-4" data-level="4" class="hud-card p-5 space-y-4">
+            <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-bold text-neonCyan tracking-wider">LEVEL 04 // ПАЦАНЫ</span>
+                <span class="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-neonCyan/15 text-neonCyan border border-neonCyan/30">АПГРЕЙД БРОНИ</span>
             </div>
-            <h2 class="text-lg font-display font-bold text-white">Пацаны: Трансформация брони</h2>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                Плечи шире, ноги длиннее старых джинсов, а связки растут так быстро, что фраза может начаться басом, а закончиться ультразвуковым писком. Это калибровка взрослой брони!
+
+            <h2 class="text-xl font-extrabold text-white leading-snug">Пацаны: Трансформация брони</h2>
+
+            <img
+                src="level-4.jpg"
+                alt="Пацаны: Трансформация брони"
+                class="level-media"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://placehold.co/360x640/141827/00f3ff?text=LEVEL+4%0Alevel-4.jpg';"
+            >
+
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Плечи становятся шире, мышцы — крепче, а рост иногда скачет так резко, что любимые джинсы за лето превращаются в шорты. Голос ломается и может внезапно сорваться на писк прямо посреди фразы — через это проходят вообще все парни, связкам просто нужно время на калибровку.
             </p>
 
-            <!-- Voice Sound Tester -->
-            <div class="bg-cyber-bg p-4 rounded-xl border border-slate-800 space-y-3 text-center">
-                <p class="text-xs font-mono text-cyber-textMuted">Тестер калибровки связок:</p>
-                <div class="grid grid-cols-2 gap-2">
-                    <button onclick="playVoiceFx('bass')" class="py-2.5 bg-cyber-cardAlt border border-cyber-neonGreen/50 text-cyber-neonGreen text-xs font-mono rounded-lg hover:bg-cyber-neonGreen/10 active:scale-95 transition">
-                        🔊 Мощный бас (80 Hz)
+            <!-- Voice Tester -->
+            <div class="bg-cyberCardInner border border-slate-800 rounded-2xl p-4 space-y-3">
+                <div class="font-mono text-xs font-bold text-white text-center">Тестер связок 🎤</div>
+                <div class="grid grid-cols-2 gap-2.5">
+                    <button onclick="playVoiceSynth('bass')" class="py-3 px-2 rounded-xl bg-cyberCard border border-neonCyan/50 text-neonCyan font-mono text-xs font-bold hover:bg-neonCyan/10 active:scale-95 transition">
+                        🔊 Бас (85 Hz)
                     </button>
-                    <button onclick="playVoiceFx('squeak')" class="py-2.5 bg-cyber-cardAlt border border-cyber-neonPink/50 text-cyber-neonPink text-xs font-mono rounded-lg hover:bg-cyber-neonPink/10 active:scale-95 transition">
-                        ⚡ Ломка связок (600 Hz)
+                    <button onclick="playVoiceSynth('squeak')" class="py-3 px-2 rounded-xl bg-cyberCard border border-neonPink/50 text-neonPink font-mono text-xs font-bold hover:bg-neonPink/10 active:scale-95 transition">
+                        🎵 Срыв на писк (620 Hz)
                     </button>
                 </div>
-                <p id="voiceMsg" class="text-[11px] font-mono text-cyber-textMuted">Нажми, чтобы услышать перепады частот связок</p>
-            </div>
-            <div class="flex items-center justify-between pt-2">
-                <span class="text-xs text-cyber-textMuted font-mono">Глава пройдена?</span>
-                <button onclick="completeLevel(4, this)" class="level-chk-btn text-xs font-mono px-3 py-1.5 rounded-lg bg-cyber-neonGreen/20 text-cyber-neonGreen border border-cyber-neonGreen/40 hover:bg-cyber-neonGreen hover:text-black transition">
-                    ✓ Готово (+XP)
-                </button>
+                <p id="voiceFeedback" class="font-mono text-[11px] text-center text-slate-400">
+                    Нажми на кнопки, чтобы протестировать звучание связок
+                </p>
+
+                <!-- Selectable Upgrade Badges -->
+                <div class="pt-2 border-t border-slate-800 space-y-2">
+                    <p class="font-mono text-[11px] text-slate-400 text-center">Отметь свои текущие апгрейды:</p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <button onclick="toggleBadge(this)" class="px-3 py-1.5 rounded-full bg-cyberCard border border-slate-700 text-xs font-mono text-slate-300 hover:border-neonLime transition">
+                            📏 Рост в отрыв
+                        </button>
+                        <button onclick="toggleBadge(this)" class="px-3 py-1.5 rounded-full bg-cyberCard border border-slate-700 text-xs font-mono text-slate-300 hover:border-neonLime transition">
+                            🎤 Голос ломается
+                        </button>
+                        <button onclick="toggleBadge(this)" class="px-3 py-1.5 rounded-full bg-cyberCard border border-slate-700 text-xs font-mono text-slate-300 hover:border-neonLime transition">
+                            🚀 На старте
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- LEVEL 5 -->
-        <section id="lvl5" class="hud-frame bg-cyber-card p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <span class="text-xs font-mono text-cyber-neonYellow font-bold">LEVEL 05 // HYGIENE</span>
-                <span class="text-[10px] bg-cyber-neonYellow/20 text-cyber-neonYellow px-2 py-0.5 rounded font-mono">ПАТЧ ПЕРВОГО ДНЯ</span>
+        <section id="level-5" data-level="5" class="hud-card p-5 space-y-4">
+            <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-bold text-neonLime tracking-wider">LEVEL 05 // ГИГИЕНА</span>
+                <span class="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-neonLime/15 text-neonLime border border-neonLime/30">ПАТЧ 1-ГО ДНЯ</span>
             </div>
-            <h2 class="text-lg font-display font-bold text-white">Прыщи, пот и гигиена</h2>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                Потовые железы работают на форсаже, а себум пытается устроить дискотеку в порах. Выдавливать прыщи — дарить бактериям вечеринку. Главное оружие: душ, антиперспирант и мягкая умывалка.
+
+            <h2 class="text-xl font-extrabold text-white leading-snug">Патч первого дня: прыщи, пот и гигиена</h2>
+
+            <img
+                src="level-5.jpg"
+                alt="Патч первого дня"
+                class="level-media level-media-lime"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://placehold.co/360x640/141827/39ff14?text=LEVEL+5%0Alevel-5.jpg';"
+            >
+
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Кожа и потовые железы включаются на турборежим: футболка после физры может пахнуть так, будто в ней жил зверь, а на лице выскакивают прыщи. Твое главное оружие — ежедневный душ, антиперспирант и мягкая умывалка. <strong class="text-neonPink">Главное правило: не дави прыщи!</strong> От этого бактерии только размножаются, а заживать будет в три раза дольше.
             </p>
 
-            <!-- Hygiene Tap Mini-Game -->
-            <div class="bg-cyber-bg p-4 rounded-xl border border-slate-800 text-center space-y-3">
-                <div class="flex justify-between items-center text-xs font-mono">
-                    <span class="text-cyber-textMuted">Ликвидируй бактерии:</span>
-                    <span id="bugScore" class="text-cyber-neonYellow font-bold">0 / 4 устранено</span>
+            <!-- Interactive Tap Mini-Game -->
+            <div class="bg-cyberCardInner border border-slate-800 rounded-2xl p-4 space-y-3">
+                <div class="flex items-center justify-between font-mono text-xs">
+                    <span class="text-white font-bold">🫧 Мини-игра: Защита кожи</span>
+                    <span id="germCounter" class="text-neonLime font-bold">0/6</span>
                 </div>
-                <div id="bugBox" class="grid grid-cols-4 gap-2">
-                    <button onclick="tapBug(this)" class="p-3 bg-slate-900 border border-cyber-neonPink/40 rounded-lg text-xl hover:scale-110 active:scale-90 transition">👾</button>
-                    <button onclick="tapBug(this)" class="p-3 bg-slate-900 border border-cyber-neonPink/40 rounded-lg text-xl hover:scale-110 active:scale-90 transition">🦠</button>
-                    <button onclick="tapBug(this)" class="p-3 bg-slate-900 border border-cyber-neonPink/40 rounded-lg text-xl hover:scale-110 active:scale-90 transition">👾</button>
-                    <button onclick="tapBug(this)" class="p-3 bg-slate-900 border border-cyber-neonPink/40 rounded-lg text-xl hover:scale-110 active:scale-90 transition">🦠</button>
+                <p class="text-xs text-slate-400">Тапай по микробам и прыщам, чтобы смыть их пенкой!</p>
+
+                <!-- Arena -->
+                <div id="germArena" class="grid grid-cols-3 gap-3 py-2">
+                    <!-- Targets populated by JS -->
                 </div>
-                <p id="bugMessage" class="text-xs font-mono text-cyber-neonGreen hidden">✨ Все бактерии устранены! Защитный барьер кожи восстановлен.</p>
-            </div>
-            <div class="flex items-center justify-between pt-2">
-                <span class="text-xs text-cyber-textMuted font-mono">Глава пройдена?</span>
-                <button onclick="completeLevel(5, this)" class="level-chk-btn text-xs font-mono px-3 py-1.5 rounded-lg bg-cyber-neonGreen/20 text-cyber-neonGreen border border-cyber-neonGreen/40 hover:bg-cyber-neonGreen hover:text-black transition">
-                    ✓ Готово (+XP)
+
+                <div id="germWinBanner" class="hidden p-3 rounded-xl bg-neonLime/15 border border-neonLime text-center font-mono text-xs font-bold text-neonLime">
+                    ✨ Кожа защищена! 6/6
+                </div>
+
+                <button onclick="resetGermGame()" class="w-full py-2.5 rounded-xl bg-cyberCard border border-slate-700 text-slate-300 font-mono text-xs hover:border-neonCyan hover:text-neonCyan transition">
+                    🔄 Сбросить раунд
                 </button>
             </div>
         </section>
 
         <!-- LEVEL 6 -->
-        <section id="lvl6" class="hud-frame bg-cyber-card p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <span class="text-xs font-mono text-cyber-neonBlue font-bold">LEVEL 06 // ENERGY</span>
-                <span class="text-[10px] bg-cyber-neonBlue/20 text-cyber-neonBlue px-2 py-0.5 rounded font-mono">РЕЖИМ ЗАРЯДКИ</span>
+        <section id="level-6" data-level="6" class="hud-card p-5 space-y-4">
+            <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-bold text-neonCyan tracking-wider">LEVEL 06 // ЭНЕРГИЯ</span>
+                <span class="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-neonCyan/15 text-neonCyan border border-neonCyan/30">ПОДЗАРЯДКА</span>
             </div>
-            <h2 class="text-lg font-display font-bold text-white">Спящий режим и подзарядка</h2>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                Почему утром так тяжело встать, а холодильник пустеет с космической скоростью? Твое тело буквально перестраивает скелет, ткани и мозг во сне. Сон 9–10 часов — это твоя главная зарядная станция.
+
+            <h2 class="text-xl font-extrabold text-white leading-snug">Спящий режим и подзарядка</h2>
+
+            <img
+                src="level-6.jpg"
+                alt="Спящий режим"
+                class="level-media"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://placehold.co/360x640/141827/00f3ff?text=LEVEL+6%0Alevel-6.jpg';"
+            >
+
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Утром невозможно оторвать голову от подушки, а днем постоянно хочется есть? Тело буквально строит новые кости, мышцы и миллионы нейронных связей — на это уходит тонна энергии. Сон <strong class="text-white">9–10 часов</strong> — не скука, а главная зарядка, и нормальная еда сейчас нужнее, чем одни чипсы.
             </p>
 
-            <!-- Energy Compare Tracker -->
-            <div class="grid grid-cols-2 gap-3 text-center font-mono text-xs">
-                <div class="p-3 bg-cyber-bg border border-red-500/40 rounded-xl space-y-1">
-                    <p class="text-red-400 font-bold">ТВОЯ БАТАРЕЯ</p>
-                    <div class="text-3xl">🪫</div>
-                    <p class="text-red-400 font-bold">1%</p>
-                    <p class="text-[10px] text-cyber-textMuted">Расход на стройку тела</p>
+            <!-- Battery Comparison Widget -->
+            <div class="bg-cyberCardInner border border-slate-800 rounded-2xl p-4 space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- Teen Battery -->
+                    <div id="teenBatteryCard" class="p-3 rounded-xl bg-cyberCard border border-red-500/60 blink-danger text-center space-y-2 transition-all">
+                        <div class="font-mono text-[11px] text-slate-300 font-bold">ТВОЯ БАТАРЕЯ</div>
+                        <div class="w-full h-4 bg-slate-900 rounded-md overflow-hidden border border-slate-700 p-0.5">
+                            <div id="teenBatteryFill" class="h-full bg-red-500 rounded-sm transition-all duration-700" style="width: 6%;"></div>
+                        </div>
+                        <div id="teenBatteryText" class="font-mono text-lg font-extrabold text-red-400">1%</div>
+                        <div id="teenBatterySub" class="text-[10px] font-mono text-slate-400">Силы ушли на рост</div>
+                    </div>
+
+                    <!-- Cat Battery -->
+                    <div class="p-3 rounded-xl bg-cyberCard border border-neonLime/50 text-center space-y-2">
+                        <div class="font-mono text-[11px] text-slate-300 font-bold">БАТАРЕЯ КОТА</div>
+                        <div class="w-full h-4 bg-slate-900 rounded-md overflow-hidden border border-slate-700 p-0.5">
+                            <div class="h-full bg-neonLime rounded-sm shadow-[0_0_8px_#39ff14]" style="width: 100%;"></div>
+                        </div>
+                        <div class="font-mono text-lg font-extrabold text-neonLime">100%</div>
+                        <div class="text-[10px] font-mono text-slate-400">Поспал 16 часов 🐱</div>
+                    </div>
                 </div>
-                <div class="p-3 bg-cyber-bg border border-cyber-neonGreen/40 rounded-xl space-y-1">
-                    <p class="text-cyber-neonGreen font-bold">БАТАРЕЯ КОТА</p>
-                    <div class="text-3xl">🔋</div>
-                    <p class="text-cyber-neonGreen font-bold">100%</p>
-                    <p class="text-[10px] text-cyber-textMuted">Поел и чиллит</p>
-                </div>
-            </div>
-            <div class="flex items-center justify-between pt-2">
-                <span class="text-xs text-cyber-textMuted font-mono">Глава пройдена?</span>
-                <button onclick="completeLevel(6, this)" class="level-chk-btn text-xs font-mono px-3 py-1.5 rounded-lg bg-cyber-neonGreen/20 text-cyber-neonGreen border border-cyber-neonGreen/40 hover:bg-cyber-neonGreen hover:text-black transition">
-                    ✓ Готово (+XP)
+
+                <button id="chargeBtn" onclick="chargeTeenBattery()" class="w-full py-3 rounded-xl bg-cyberCard border border-neonLime/60 text-neonLime font-mono font-bold text-xs hover:bg-neonLime/10 active:scale-95 transition">
+                    🔋 Поставить на зарядку (Сон 9–10 ч)
                 </button>
             </div>
         </section>
 
         <!-- LEVEL 7 -->
-        <section id="lvl7" class="hud-frame bg-cyber-card p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <span class="text-xs font-mono text-cyber-neonPurple font-bold">LEVEL 07 // BORDERS</span>
-                <span class="text-[10px] bg-cyber-neonPurple/20 text-cyber-neonPurple px-2 py-0.5 rounded font-mono">ПРИВАТНОСТЬ</span>
+        <section id="level-7" data-level="7" class="hud-card p-5 space-y-4">
+            <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-bold text-neonPurple tracking-wider">LEVEL 07 // ГРАНИЦЫ</span>
+                <span class="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-neonPurple/15 text-neonPurple border border-neonPurple/40">КРЕПОСТЬ</span>
             </div>
-            <h2 class="text-lg font-display font-bold text-white">Моя комната — моя крепость</h2>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                Закрыть дверь и попросить не входить без стука — это не бунт против семьи, а здоровая сепарация. Ты учишься выстраивать личные границы. Главное — проговаривать их спокойно словами, а не только дверным хлопком.
+
+            <h2 class="text-xl font-extrabold text-white leading-snug">Моя комната — моя крепость</h2>
+
+            <img
+                src="level-7.jpg"
+                alt="Моя крепость"
+                class="level-media"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://placehold.co/360x640/141827/b829ff?text=LEVEL+7%0Alevel-7.jpg';"
+            >
+
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Хочется закрыть дверь, чтобы никто не входил без стука, не трогал вещи и не заглядывал в телефон? Это <strong class="text-white">сепарация</strong> — ты становишься самостоятельной личностью. Личные границы — это абсолютно нормально, просто лучше говорить о них словами, а не хлопать дверью.
             </p>
 
-            <!-- Door Sign Interactive Generator -->
-            <div class="bg-cyber-bg p-4 rounded-xl border border-slate-800 space-y-3 text-center">
-                <p class="text-xs font-mono text-cyber-textMuted">Выбери статус для своей двери:</p>
-                <div class="grid grid-cols-2 gap-2 text-xs font-mono">
-                    <button onclick="selectDoorSign('🚪 СТУЧАТЬ 3 РАЗА')" class="door-opt p-2.5 bg-cyber-cardAlt border border-slate-700 rounded-lg hover:border-cyber-neonBlue transition">
-                        🚪 СТУЧАТЬ 3 РАЗА
+            <!-- Door Sign Generator -->
+            <div class="bg-cyberCardInner border border-slate-800 rounded-2xl p-4 space-y-3">
+                <div class="font-mono text-xs text-slate-400 text-center">Собери табличку на свою дверь:</div>
+
+                <div class="flex flex-col gap-2">
+                    <button onclick="setDoorSign('🚪 Стучать 3 раза')" class="py-2.5 px-3 rounded-xl bg-cyberCard border border-slate-700 text-xs font-mono text-slate-200 hover:border-neonCyan active:scale-95 transition text-left">
+                        🚪 Стучать 3 раза
                     </button>
-                    <button onclick="selectDoorSign('🎧 В НАУШНИКАХ')" class="door-opt p-2.5 bg-cyber-cardAlt border border-slate-700 rounded-lg hover:border-cyber-neonBlue transition">
-                        🎧 В НАУШНИКАХ
+                    <button onclick="setDoorSign('🎧 Сначала напиши в чат')" class="py-2.5 px-3 rounded-xl bg-cyberCard border border-slate-700 text-xs font-mono text-slate-200 hover:border-neonCyan active:scale-95 transition text-left">
+                        🎧 Сначала напиши в чат
                     </button>
-                    <button onclick="selectDoorSign('⛔ ВХОД ЗАПРЕЩЕН')" class="door-opt p-2.5 bg-cyber-cardAlt border border-slate-700 rounded-lg hover:border-cyber-neonPink transition">
-                        ⛔ ВХОД ЗАПРЕЩЕН
-                    </button>
-                    <button onclick="selectDoorSign('🍵 ВХОД С ЧАЕМ ОК')" class="door-opt p-2.5 bg-cyber-cardAlt border border-slate-700 rounded-lg hover:border-cyber-neonGreen transition">
-                        🍵 ВХОД С ЧАЕМ ОК
+                    <button onclick="setDoorSign('🕊️ Дайте 15 минут тишины')" class="py-2.5 px-3 rounded-xl bg-cyberCard border border-slate-700 text-xs font-mono text-slate-200 hover:border-neonCyan active:scale-95 transition text-left">
+                        🕊️ Дайте 15 минут тишины
                     </button>
                 </div>
-                <div id="doorPreview" class="p-3 rounded-lg bg-cyber-cardAlt border border-cyber-neonYellow/40 font-mono text-xs text-cyber-neonYellow">
-                    Табличка: 🚪 СТУЧАТЬ 3 РАЗА
+
+                <!-- Glowing Neon Preview -->
+                <div class="p-4 rounded-xl bg-[#0a0d16] border-2 border-neonCyan shadow-[0_0_16px_rgba(0,243,255,0.28)] text-center space-y-1">
+                    <div class="font-mono text-[10px] tracking-widest text-neonPink uppercase">HIGH SECURITY ZONE</div>
+                    <div id="doorSignPreview" class="font-mono text-sm font-extrabold text-neonCyan">
+                        🚪 Стучать 3 раза
+                    </div>
                 </div>
-                <button onclick="copyDoorSign()" class="w-full py-2 bg-slate-900 border border-slate-700 text-xs font-mono text-slate-300 rounded-lg hover:border-cyber-neonBlue transition">
-                    📋 Скопировать текст для мессенджера
-                </button>
-            </div>
-            <div class="flex items-center justify-between pt-2">
-                <span class="text-xs text-cyber-textMuted font-mono">Глава пройдена?</span>
-                <button onclick="completeLevel(7, this)" class="level-chk-btn text-xs font-mono px-3 py-1.5 rounded-lg bg-cyber-neonGreen/20 text-cyber-neonGreen border border-cyber-neonGreen/40 hover:bg-cyber-neonGreen hover:text-black transition">
-                    ✓ Готово (+XP)
+
+                <button onclick="copyDoorStatus()" class="w-full py-3 rounded-xl bg-cyberCard border border-neonCyan/50 text-neonCyan font-mono font-bold text-xs hover:bg-neonCyan/10 active:scale-95 transition">
+                    📋 Скопировать статус для родителей
                 </button>
             </div>
         </section>
 
         <!-- LEVEL 8 -->
-        <section id="lvl8" class="hud-frame bg-cyber-card p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <span class="text-xs font-mono text-cyber-neonPink font-bold">LEVEL 08 // CRUSH</span>
-                <span class="text-[10px] bg-cyber-neonPink/20 text-cyber-neonPink px-2 py-0.5 rounded font-mono">ЭМОЦИИ</span>
+        <section id="level-8" data-level="8" class="hud-card p-5 space-y-4">
+            <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-bold text-neonPink tracking-wider">LEVEL 08 // СИМПАТИИ</span>
+                <span class="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-neonPink/15 text-neonPink border border-neonPink/30">КРАШИ И КРИНЖ</span>
             </div>
-            <h2 class="text-lg font-display font-bold text-white">Краши, кринж и новые мысли</h2>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                Внезапное смущение, потеющие ладони при взгляде на знакомого человека и новые странные фантазии про тело. Это абсолютно нормально: мозг исследует романтическую и сексуальную сторону жизни.
+
+            <h2 class="text-xl font-extrabold text-white leading-snug">Краши, кринж и новые мысли</h2>
+
+            <img
+                src="level-8.jpg"
+                alt="Краши и кринж"
+                class="level-media level-media-pink"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://placehold.co/360x640/141827/ff007f?text=LEVEL+8%0Alevel-8.jpg';"
+            >
+
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Обычные знакомые вдруг вызывают странное волнение, потеют ладони, а в голове появляются неловкие мысли про тело или симпатии? Мозг просто открывает новую локацию на карте. Краши, смущение и неловкие паузы в этом возрасте — на 100% естественны.
             </p>
 
-            <!-- Reaction Counter Buttons -->
-            <div class="bg-cyber-bg p-3.5 rounded-xl border border-slate-800">
-                <p class="text-xs font-mono text-cyber-textMuted mb-2.5 text-center">Оцени свои ощущения:</p>
-                <div class="grid grid-cols-3 gap-2 font-mono text-xs">
-                    <button onclick="addReaction(this)" class="py-2.5 bg-cyber-cardAlt border border-cyber-neonPink/40 rounded-lg text-cyber-neonPink hover:bg-cyber-neonPink/10 active:scale-95 transition">
-                        💘 ЖИЗА (<span class="val">42</span>)
+            <!-- Interactive Reaction Buttons -->
+            <div class="bg-cyberCardInner border border-slate-800 rounded-2xl p-4 space-y-3">
+                <div class="font-mono text-xs text-slate-400 text-center">Отметь, если знакомо (можно кликать!):</div>
+                <div class="grid grid-cols-1 gap-2.5">
+                    <button onclick="incrementReaction(this)" class="flex items-center justify-between px-4 py-3 rounded-xl bg-cyberCard border border-neonPink/45 text-white font-mono text-xs font-bold hover:bg-neonPink/10 active:scale-95 transition">
+                        <span>😍 Краш детектед</span>
+                        <span class="reaction-count px-2.5 py-0.5 rounded-full bg-neonPink/20 text-neonPink">128</span>
                     </button>
-                    <button onclick="addReaction(this)" class="py-2.5 bg-cyber-cardAlt border border-cyber-neonYellow/40 rounded-lg text-cyber-neonYellow hover:bg-cyber-neonYellow/10 active:scale-95 transition">
-                        🤦 КРИНЖ (<span class="val">27</span>)
+                    <button onclick="incrementReaction(this)" class="flex items-center justify-between px-4 py-3 rounded-xl bg-cyberCard border border-neonCyan/45 text-white font-mono text-xs font-bold hover:bg-neonCyan/10 active:scale-95 transition">
+                        <span>🤦‍♂️ Кринж / неловко</span>
+                        <span class="reaction-count px-2.5 py-0.5 rounded-full bg-neonCyan/20 text-neonCyan">94</span>
                     </button>
-                    <button onclick="addReaction(this)" class="py-2.5 bg-cyber-cardAlt border border-cyber-neonBlue/40 rounded-lg text-cyber-neonBlue hover:bg-cyber-neonBlue/10 active:scale-95 transition">
-                        👀 БЫЛО (<span class="val">58</span>)
+                    <button onclick="incrementReaction(this)" class="flex items-center justify-between px-4 py-3 rounded-xl bg-cyberCard border border-neonLime/45 text-white font-mono text-xs font-bold hover:bg-neonLime/10 active:scale-95 transition">
+                        <span>🔥 Жиза</span>
+                        <span class="reaction-count px-2.5 py-0.5 rounded-full bg-neonLime/20 text-neonLime">215</span>
                     </button>
                 </div>
-            </div>
-            <div class="flex items-center justify-between pt-2">
-                <span class="text-xs text-cyber-textMuted font-mono">Глава пройдена?</span>
-                <button onclick="completeLevel(8, this)" class="level-chk-btn text-xs font-mono px-3 py-1.5 rounded-lg bg-cyber-neonGreen/20 text-cyber-neonGreen border border-cyber-neonGreen/40 hover:bg-cyber-neonGreen hover:text-black transition">
-                    ✓ Готово (+XP)
-                </button>
             </div>
         </section>
 
         <!-- LEVEL 9 -->
-        <section id="lvl9" class="hud-frame bg-cyber-card p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <span class="text-xs font-mono text-cyber-neonGreen font-bold">LEVEL 09 // ALLIES</span>
-                <span class="text-[10px] bg-cyber-neonGreen/20 text-cyber-neonGreen px-2 py-0.5 rounded font-mono">САППОРТ</span>
+        <section id="level-9" data-level="9" class="hud-card p-5 space-y-4">
+            <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-bold text-neonLime tracking-wider">LEVEL 09 // КОМАНДА</span>
+                <span class="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-neonLime/15 text-neonLime border border-neonLime/30">САППОРТ</span>
             </div>
-            <h2 class="text-lg font-display font-bold text-white">Родители: Боссы уровня или саппорт?</h2>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                Иногда кажется, что родители говорят на другом языке и лезут с советами. Но они тоже в стрессе: их милый ребенок вдруг ощетинился. Родители — не финальные боссы, которых надо победить, а твоя группа поддержки.
+
+            <h2 class="text-xl font-extrabold text-white leading-snug">Родители: боссы уровня или саппорт?</h2>
+
+            <img
+                src="level-9.jpg"
+                alt="Саппорт уровня"
+                class="level-media level-media-lime"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://placehold.co/360x640/141827/39ff14?text=LEVEL+9%0Alevel-9.jpg';"
+            >
+
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Иногда кажется, что родители задают бесячие вопросы и живут на другой планете. Но они проходят твой пубертат вместе с тобой — им тоже непривычно, когда ребенок становится колючим. Они не финальные боссы, а твой <strong class="text-neonLime">саппорт</strong>: помогут с умывалкой, прокладками, выслушают и обнимут, когда ты не вывозишь.
             </p>
 
             <!-- Support Shield Button -->
-            <div class="text-center space-y-2.5">
-                <button id="shieldBtn" onclick="activateSupportShield()" class="w-full py-3.5 bg-cyber-cardAlt border-2 border-cyber-neonGreen text-cyber-neonGreen font-mono text-xs rounded-xl hover:shadow-neon-green active:scale-95 transition">
-                    🛡️ АКТИВИРОВАТЬ ЩИТ САППОРТА
+            <div class="space-y-3">
+                <button id="supportShieldBtn" onclick="activateShield()" class="w-full py-3.5 px-4 rounded-xl bg-cyberCardInner border-2 border-neonLime text-neonLime font-mono font-bold text-sm hover:bg-neonLime/10 active:scale-95 transition">
+                    🛡️ Призвать саппорт
                 </button>
-                <div id="shieldInfo" class="hidden p-3.5 bg-cyber-bg border border-cyber-neonGreen/40 rounded-xl text-xs font-mono text-cyber-neonGreen text-left space-y-1">
-                    <p>✨ <strong>Щит активен:</strong> Родители готовы купить нужные средства, сделать чай, обнять и прикрыть от школьного стресса без лишних допросов.</p>
+
+                <div id="supportPhraseBox" class="hidden p-4 rounded-2xl bg-neonLime/10 border border-neonLime/50 space-y-2">
+                    <div class="font-mono text-xs font-bold text-neonLime">✨ Чит-код для разговора с родителями:</div>
+                    <p class="text-sm text-white font-medium italic">
+                        «Мне сейчас тяжело, давай просто помолчим или попьем чай»
+                    </p>
+                    <p class="text-xs text-slate-300">
+                        Эта простая фраза снимает напряжение и сразу дает понять, что тебе сейчас нужна поддержка, а не нотации.
+                    </p>
                 </div>
-            </div>
-            <div class="flex items-center justify-between pt-2">
-                <span class="text-xs text-cyber-textMuted font-mono">Глава пройдена?</span>
-                <button onclick="completeLevel(9, this)" class="level-chk-btn text-xs font-mono px-3 py-1.5 rounded-lg bg-cyber-neonGreen/20 text-cyber-neonGreen border border-cyber-neonGreen/40 hover:bg-cyber-neonGreen hover:text-black transition">
-                    ✓ Готово (+XP)
-                </button>
             </div>
         </section>
 
         <!-- LEVEL 10 / FINALE -->
-        <section id="lvl10" class="hud-frame bg-cyber-card p-6 space-y-5 text-center shadow-neon-green">
-            <div class="inline-block bg-cyber-neonGreen/20 text-cyber-neonGreen border border-cyber-neonGreen px-3 py-1 text-xs font-mono rounded-full tracking-wider uppercase">
-                Обновление принято: 100%
+        <section id="level-10" data-level="10" class="hud-card p-5 space-y-4 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neonLime/15 border border-neonLime/50 text-neonLime font-mono text-[11px] font-bold uppercase tracking-wider">
+                <span>🏆</span> UPDATE SUCCESSFUL 100%
             </div>
-            <h2 class="text-2xl font-display font-black text-white">Ты в полном порядке!</h2>
-            <p class="text-xs text-slate-300 leading-relaxed">
-                Нет правильного или неправильного расписания взросления. Кто-то растет раньше, кто-то позже. Ты не соревнуешься ни с кем. Твое тело знает, что делает, и прямо сейчас строит твою уникальную суперсилу.
+
+            <h2 class="text-2xl font-extrabold text-white leading-snug">Финал: Ты в порядке!</h2>
+
+            <img
+                src="level-10.jpg"
+                alt="Обновление успешно"
+                class="level-media level-media-lime"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='https://placehold.co/360x640/141827/39ff14?text=LEVEL+10%0Alevel-10.jpg';"
+            >
+
+            <p class="text-sm text-slate-300 leading-relaxed text-left">
+                Правильного или идеального пубертата не существует — кто-то вытягивается раньше, кто-то позже, у каждого свое расписание. Ты не соревнуешься с одноклассниками. <strong class="text-white">С тобой всё в порядке.</strong> Заботься о себе, не стесняйся задавать вопросы и радуйся тому, каким крутым взрослым ты становишься!
             </p>
 
-            <button onclick="celebrateFinale()" class="w-full py-3.5 bg-gradient-to-r from-cyber-neonGreen via-cyber-neonBlue to-cyber-neonPink text-black font-display font-bold text-xs tracking-widest uppercase rounded-xl shadow-neon-green hover:opacity-95 active:scale-95 transition">
-                🎉 Завершить установку (Салют)
+            <button onclick="launchFinaleCelebration()" class="btn-glow-lime w-full py-4 px-5 rounded-xl font-mono font-extrabold text-sm text-cyberBg tracking-wide hover:brightness-110 active:scale-95 transition">
+                🎉 Обновление принято!
             </button>
+        </section>
 
-            <!-- Родительский блок -->
-            <div class="text-left bg-cyber-bg p-4 rounded-xl border border-slate-800 space-y-2 mt-4 font-mono text-xs">
-                <p class="text-cyber-neonPink font-bold">📌 Памятка для родителей:</p>
-                <p class="text-slate-300 leading-relaxed">
-                    Колючесть подростка — признак роста, а не плохого воспитания. Будьте надежным тылом, стучитесь перед входом и давайте право на плохое настроение.
+        <!-- PARENT BLOCK & FOOTER -->
+        <footer class="hud-card p-5 space-y-4 border-neonPink/30">
+            <div class="space-y-2">
+                <div class="font-mono text-xs font-bold text-neonPink uppercase tracking-wider">📌 Для родителей</div>
+                <h3 class="text-lg font-extrabold text-white">Как быть рядом без лишних ссор</h3>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Этот гайд создан, чтобы вы могли поговорить с подростком на одном языке — без неловкости и лекций. Колючесть, усталость и закрытая дверь — это не протест против вас, а нормальный этап взросления. Будьте надежным тылом, стучитесь перед входом и напоминайте, что вы на его стороне.
                 </p>
             </div>
 
-            <!-- Share and Print Actions -->
-            <div class="pt-2 grid grid-cols-2 gap-2 font-mono text-xs">
-                <button onclick="shareLanding()" class="py-2.5 bg-cyber-cardAlt border border-cyber-neonBlue text-cyber-neonBlue rounded-lg hover:bg-cyber-neonBlue/10 transition">
-                    🔗 Поделиться
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 no-print">
+                <button onclick="shareGuide()" class="py-3 px-4 rounded-xl bg-cyberCardInner border border-neonCyan/50 text-neonCyan font-mono font-bold text-xs hover:bg-neonCyan/10 active:scale-95 transition">
+                    🔗 Поделиться ссылкой
                 </button>
-                <button onclick="window.print()" class="py-2.5 bg-cyber-cardAlt border border-cyber-neonPurple text-cyber-neonPurple rounded-lg hover:bg-cyber-neonPurple/10 transition">
-                    📄 Печать / PDF
-                </button>
-            </div>
-            <div class="flex items-center justify-between pt-2">
-                <span class="text-xs text-cyber-textMuted font-mono">Финальный чекпоинт</span>
-                <button onclick="completeLevel(10, this)" class="level-chk-btn text-xs font-mono px-3 py-1.5 rounded-lg bg-cyber-neonGreen/20 text-cyber-neonGreen border border-cyber-neonGreen/40 hover:bg-cyber-neonGreen hover:text-black transition">
-                    ✓ Готово (+XP)
+                <button onclick="printGuide()" class="py-3 px-4 rounded-xl bg-cyberCardInner border border-neonPurple/50 text-neonPurple font-mono font-bold text-xs hover:bg-neonPurple/10 active:scale-95 transition">
+                    📄 Сохранить как PDF
                 </button>
             </div>
-        </section>
+
+            <div class="pt-3 border-t border-slate-800/80 text-center font-mono text-[11px] text-slate-500">
+                ПУБЕРТАТ 2.0 // Интерактивный гайд для подростков и родителей
+            </div>
+        </footer>
 
     </main>
 
-    <!-- Web Audio & Interactivity -->
     <script>
-        // Web Audio Synthesizer
+        /* =========================================================
+           1. WEB AUDIO API SYNTHESIZER (NO EXTERNAL FILES)
+        ========================================================= */
         let audioCtx = null;
-        let soundEnabled = true;
+        let sfxEnabled = true;
 
-        function getAudioContext() {
+        function ensureAudio() {
             if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    audioCtx = new AudioContextClass();
+                }
             }
-            if (audioCtx.state === 'suspended') {
+            if (audioCtx && audioCtx.state === 'suspended') {
                 audioCtx.resume();
             }
             return audioCtx;
         }
 
-        function toggleMute() {
-            soundEnabled = !soundEnabled;
-            const btn = document.getElementById('soundToggle');
-            btn.textContent = soundEnabled ? '🔊 SFX' : '🔇 MUTE';
-            btn.classList.toggle('text-slate-500', !soundEnabled);
+        function toggleSfx() {
+            sfxEnabled = !sfxEnabled;
+            const btn = document.getElementById('sfxToggleBtn');
+            if (sfxEnabled) {
+                btn.textContent = '🔊 SFX';
+                btn.classList.remove('text-slate-500', 'border-slate-700');
+                btn.classList.add('text-neonCyan', 'border-neonCyan/40');
+                playClick();
+            } else {
+                btn.textContent = '🔇 MUTE';
+                btn.classList.remove('text-neonCyan', 'border-neonCyan/40');
+                btn.classList.add('text-slate-500', 'border-slate-700');
+            }
         }
 
-        function playClickSound() {
-            if (!soundEnabled) return;
+        function playClick(freq = 540) {
+            if (!sfxEnabled) return;
             try {
-                const ctx = getAudioContext();
+                const ctx = ensureAudio();
+                if (!ctx) return;
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
                 osc.type = 'triangle';
-                osc.frequency.setValueAtTime(460, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(920, ctx.currentTime + 0.07);
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(freq * 1.6, ctx.currentTime + 0.06);
                 gain.gain.setValueAtTime(0.12, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.07);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.07);
                 osc.connect(gain);
                 gain.connect(ctx.destination);
                 osc.start();
                 osc.stop(ctx.currentTime + 0.07);
-            } catch(e) {}
+            } catch (e) {}
         }
 
-        function playSuccessSound() {
-            if (!soundEnabled) return;
+        function playSprayZap() {
+            if (!sfxEnabled) return;
             try {
-                const ctx = getAudioContext();
-                const chords = [523.25, 659.25, 783.99, 1046.50];
-                chords.forEach((freq, idx) => {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.value = freq;
-                    gain.gain.setValueAtTime(0.1, ctx.currentTime + idx * 0.09);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + idx * 0.09 + 0.22);
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start(ctx.currentTime + idx * 0.09);
-                    osc.stop(ctx.currentTime + idx * 0.09 + 0.22);
-                });
-            } catch(e) {}
+                const ctx = ensureAudio();
+                if (!ctx) return;
+                // White noise burst for spray + pop tone
+                const bufferSize = ctx.sampleRate * 0.08;
+                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+                }
+                const noise = ctx.createBufferSource();
+                noise.buffer = buffer;
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'highpass';
+                filter.frequency.value = 1600;
+                const gain = ctx.createGain();
+                gain.gain.setValueAtTime(0.18, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(ctx.destination);
+                noise.start();
+
+                playClick(780);
+            } catch (e) {}
         }
 
-        function playVoiceFx(type) {
-            if (!soundEnabled) return;
+        function playVoiceSynth(mode) {
+            markLevelCompleted(4);
+            const msg = document.getElementById('voiceFeedback');
+            if (mode === 'bass') {
+                msg.textContent = '🔊 85 Hz: Уверенный взрослый бас активирован!';
+                msg.className = 'font-mono text-[11px] text-center text-neonCyan';
+            } else {
+                msg.textContent = '🎵 620 Hz: Ой! Связки сорвались на писк — классика пубертата!';
+                msg.className = 'font-mono text-[11px] text-center text-neonPink';
+            }
+
+            if (!sfxEnabled) return;
             try {
-                const ctx = getAudioContext();
+                const ctx = ensureAudio();
+                if (!ctx) return;
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
-                if (type === 'bass') {
+                if (mode === 'bass') {
                     osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(90, ctx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(75, ctx.currentTime + 0.3);
-                    document.getElementById('voiceMsg').textContent = '🔊 Включился плотный взрослый бас!';
+                    osc.frequency.setValueAtTime(85, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(78, ctx.currentTime + 0.35);
+                    gain.gain.setValueAtTime(0.16, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.38);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.38);
                 } else {
                     osc.type = 'sine';
-                    osc.frequency.setValueAtTime(250, ctx.currentTime);
-                    osc.frequency.linearRampToValueAtTime(650, ctx.currentTime + 0.15);
-                    osc.frequency.linearRampToValueAtTime(180, ctx.currentTime + 0.3);
-                    document.getElementById('voiceMsg').textContent = '⚡ Ой! Связки скакнули в писк — чистая физиология!';
+                    osc.frequency.setValueAtTime(220, ctx.currentTime);
+                    osc.frequency.linearRampToValueAtTime(620, ctx.currentTime + 0.14);
+                    osc.frequency.linearRampToValueAtTime(260, ctx.currentTime + 0.32);
+                    gain.gain.setValueAtTime(0.16, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.34);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.34);
                 }
-                gain.gain.setValueAtTime(0.15, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.3);
-            } catch(e) {}
+            } catch (e) {}
         }
 
-        // Level Tracking
-        const completedLevels = new Set();
-        function completeLevel(lvlNum, btn) {
-            playSuccessSound();
-            completedLevels.add(lvlNum);
-            const count = completedLevels.size;
-            document.getElementById('progressText').textContent = `${count} / 10 LVL`;
-            document.getElementById('topProgressBar').style.width = `${(count / 10) * 100}%`;
-            
-            btn.classList.remove('bg-cyber-neonGreen/20', 'text-cyber-neonGreen');
-            btn.classList.add('bg-cyber-neonGreen', 'text-black', 'font-bold');
-            btn.textContent = '★ Пройдено';
+        function playVictoryChord() {
+            if (!sfxEnabled) return;
+            try {
+                const ctx = ensureAudio();
+                if (!ctx) return;
+                const notes = [523.25, 659.25, 783.99, 1046.5]; // C5 E5 G5 C6
+                notes.forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.value = freq;
+                    const start = ctx.currentTime + i * 0.08;
+                    gain.gain.setValueAtTime(0.14, start);
+                    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.45);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(start);
+                    osc.stop(start + 0.46);
+                });
+            } catch (e) {}
         }
 
-        function scrollToLevel(id) {
-            const el = document.getElementById(id);
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        /* =========================================================
+           2. TOAST HELPER & CLIPBOARD COPY
+        ========================================================= */
+        let toastTimer = null;
+        function showToast(message) {
+            const box = document.getElementById('toastBox');
+            const content = document.getElementById('toastContent');
+            content.textContent = message;
+            box.classList.remove('opacity-0', 'translate-y-4');
+            box.classList.add('opacity-100', 'translate-y-0');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                box.classList.add('opacity-0', 'translate-y-4');
+                box.classList.remove('opacity-100', 'translate-y-0');
+            }, 2600);
         }
 
-        // Interactivities
-        let installPct = 45;
-        function boostInstall() {
-            installPct = Math.min(100, installPct + 15);
-            document.getElementById('lvl1ProgressVal').textContent = installPct + '%';
-            document.getElementById('lvl1Bar').style.width = installPct + '%';
-            if (installPct === 100) {
-                document.getElementById('lvl1ProgressVal').textContent = '100% (ГОТОВО К БОЮ)';
+        function copyTextFallback(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                return true;
+            } catch (err) {
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
             }
         }
 
-        function updateMood(val) {
-            document.getElementById('sliderValLabel').textContent = val + '%';
-            const box = document.getElementById('moodStatus');
-            if (val < 30) {
-                box.textContent = '🌧️ Дно колодца: Все раздражают, закройте дверь и дайте плед';
-                box.className = 'p-3 rounded-lg bg-cyber-cardAlt text-center font-mono text-xs border border-cyber-neonPink text-cyber-neonPink';
-            } else if (val > 70) {
-                box.textContent = '🚀 Космос: Энергия бьет ключом, смех без причины, мир у ног!';
-                box.className = 'p-3 rounded-lg bg-cyber-cardAlt text-center font-mono text-xs border border-cyber-neonGreen text-cyber-neonGreen';
+        /* =========================================================
+           3. HUD LEVEL PROGRESS TRACKER (SCROLL + INTERACTION)
+        ========================================================= */
+        const unlockedLevels = new Set();
+
+        function markLevelCompleted(lvlNum) {
+            if (!unlockedLevels.has(lvlNum)) {
+                unlockedLevels.add(lvlNum);
+                const section = document.querySelector(`[data-level="${lvlNum}"]`);
+                if (section) section.classList.add('level-unlocked');
+                updateHudProgress();
+            }
+        }
+
+        function updateHudProgress() {
+            const count = unlockedLevels.size;
+            document.getElementById('hudLevelCounter').textContent = `${count}/10 LVL`;
+            document.getElementById('hudProgressBar').style.width = `${(count / 10) * 100}%`;
+        }
+
+        function setupScrollObserver() {
+            const sections = document.querySelectorAll('section[data-level]');
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            const lvl = parseInt(entry.target.getAttribute('data-level'), 10);
+                            markLevelCompleted(lvl);
+                        }
+                    });
+                }, { threshold: 0.35 });
+                sections.forEach((sec) => observer.observe(sec));
+            }
+        }
+
+        /* =========================================================
+           4. LEVEL 1: HORMONES PROGRESS BAR
+        ========================================================= */
+        let hormoneProgress = 20;
+        const hormoneMessages = [
+            '> Админы-гормоны пьют кофе и готовят апдейт...',
+            '> Скачиваем новый рост... джинсы уже в панике!',
+            '> Калибровка эмоций: качели установлены на максимум.',
+            '> Прокачка харизмы и самостоятельности на 80%...',
+            '> ГОТОВО 100%! Система перешла в режим Пубертат 2.0!'
+        ];
+
+        function boostHormones() {
+            playClick(620);
+            markLevelCompleted(1);
+            if (hormoneProgress >= 100) {
+                hormoneProgress = 20;
             } else {
-                box.textContent = '⚖️ Баланс: Спокойный нейтралитет и чилл';
-                box.className = 'p-3 rounded-lg bg-cyber-cardAlt text-center font-mono text-xs border border-cyber-neonBlue text-cyber-neonBlue';
+                hormoneProgress = Math.min(100, hormoneProgress + 20);
+            }
+            document.getElementById('hormonePercent').textContent = `${hormoneProgress}%`;
+            document.getElementById('hormoneBar').style.width = `${hormoneProgress}%`;
+            const idx = Math.min(hormoneMessages.length - 1, Math.floor((hormoneProgress - 20) / 20));
+            document.getElementById('hormoneStatus').textContent = hormoneMessages[idx];
+            if (hormoneProgress === 100) {
+                playVictoryChord();
             }
         }
 
-        function toggleAccordion(contentId, arrowId) {
-            const content = document.getElementById(contentId);
-            const arrow = document.getElementById(arrowId);
+        /* =========================================================
+           5. LEVEL 2: MOOD SLIDER
+        ========================================================= */
+        function updateMoodSlider(value) {
+            markLevelCompleted(2);
+            const val = parseInt(value, 10);
+            document.getElementById('moodPercent').textContent = `${val}%`;
+            const card = document.getElementById('moodCard');
+            const title = document.getElementById('moodTitle');
+            const tip = document.getElementById('moodTip');
+
+            if (val < 34) {
+                card.className = 'p-3.5 rounded-xl bg-cyberCard border border-neonPink/60 space-y-1.5 transition-all';
+                title.className = 'font-mono font-bold text-xs text-neonPink';
+                title.textContent = '🌧️ На дне колодца / хочется в наушники';
+                tip.textContent = 'Совет: дай себе паузу. Плед, тишина или любимый плейлист — это законный способ перезагрузиться.';
+            } else if (val > 67) {
+                card.className = 'p-3.5 rounded-xl bg-cyberCard border border-neonLime/60 space-y-1.5 transition-all';
+                title.className = 'font-mono font-bold text-xs text-neonLime';
+                title.textContent = '☀️ На волне / готов захватить мир';
+                tip.textContent = 'Совет: лови этот драйв! Направь энергию в творчество, спорт или встречу с друзьями.';
+            } else {
+                card.className = 'p-3.5 rounded-xl bg-cyberCard border border-neonCyan/40 space-y-1.5 transition-all';
+                title.className = 'font-mono font-bold text-xs text-neonCyan';
+                title.textContent = '🎢 Качает туда-сюда';
+                tip.textContent = 'Совет: когда эмоции скачут, сделай 5 глубоких вдохов, попей воды или включи любимый трек. Это временно!';
+            }
+        }
+
+        /* =========================================================
+           6. LEVEL 3: FAQ ACCORDION & CHECKLIST
+        ========================================================= */
+        function toggleFaq() {
+            playClick(500);
+            markLevelCompleted(3);
+            const content = document.getElementById('faqContent');
+            const arrow = document.getElementById('faqArrow');
             content.classList.toggle('hidden');
             arrow.textContent = content.classList.contains('hidden') ? '▼' : '▲';
         }
 
-        let bacteriaKilled = 0;
-        function tapBug(btn) {
-            playClickSound();
-            btn.textContent = '🧼';
+        function updateLootCount() {
+            playClick(680);
+            markLevelCompleted(3);
+            const checks = document.querySelectorAll('.loot-chk');
+            const checked = Array.from(checks).filter(c => c.checked).length;
+            document.getElementById('lootCount').textContent = `${checked}/${checks.length}`;
+            if (checked === checks.length) {
+                showToast('🎒 Рюкзак полностью укомплектован!');
+            }
+        }
+
+        /* =========================================================
+           7. LEVEL 4: UPGRADE BADGES
+        ========================================================= */
+        function toggleBadge(btn) {
+            playClick(560);
+            markLevelCompleted(4);
+            const active = btn.classList.toggle('bg-neonLime/20');
+            btn.classList.toggle('border-neonLime', active);
+            btn.classList.toggle('text-neonLime', active);
+            btn.classList.toggle('bg-cyberCard', !active);
+            btn.classList.toggle('border-slate-700', !active);
+            btn.classList.toggle('text-slate-300', !active);
+        }
+
+        /* =========================================================
+           8. LEVEL 5: HYGIENE TAP MINI-GAME (6 TARGETS)
+        ========================================================= */
+        const germIcons = ['🦠', '👾', '🔴', '🦠', '👾', '🔴'];
+        let zappedCount = 0;
+
+        function initGermGame() {
+            const arena = document.getElementById('germArena');
+            arena.innerHTML = '';
+            zappedCount = 0;
+            document.getElementById('germCounter').textContent = '0/6';
+            document.getElementById('germWinBanner').classList.add('hidden');
+
+            germIcons.forEach((icon, index) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'relative h-20 rounded-2xl bg-cyberCard border border-neonPink/50 flex flex-col items-center justify-center gap-1 hover:scale-105 active:scale-90 transition shadow-[0_0_12px_rgba(255,0,127,0.2)]';
+                btn.innerHTML = `<span class="text-2xl germ-float" style="animation-delay:${index * 0.2}s">${icon}</span><span class="font-mono text-[10px] text-neonPink">БАГ #${index + 1}</span>`;
+                btn.onclick = () => zapGerm(btn);
+                arena.appendChild(btn);
+            });
+        }
+
+        function zapGerm(btn) {
+            if (btn.disabled) return;
             btn.disabled = true;
-            btn.classList.add('opacity-40');
-            bacteriaKilled++;
-            document.getElementById('bugScore').textContent = `${bacteriaKilled} / 4 устранено`;
-            if (bacteriaKilled >= 4) {
-                document.getElementById('bugMessage').classList.remove('hidden');
+            playSprayZap();
+            markLevelCompleted(5);
+            zappedCount++;
+
+            // Particle foam effect
+            btn.className = 'relative h-20 rounded-2xl bg-neonCyan/10 border border-neonLime/50 flex flex-col items-center justify-center gap-1 transition';
+            btn.innerHTML = `<span class="text-2xl zap-burst absolute">🫧</span><span class="text-xl">✨</span><span class="font-mono text-[10px] text-neonLime">ЧИСТО</span>`;
+
+            document.getElementById('germCounter').textContent = `${zappedCount}/6`;
+
+            if (zappedCount === 6) {
+                document.getElementById('germWinBanner').classList.remove('hidden');
+                playVictoryChord();
             }
         }
 
-        let currentDoorSign = '🚪 СТУЧАТЬ 3 РАЗА';
-        function selectDoorSign(text) {
-            playClickSound();
-            currentDoorSign = text;
-            document.getElementById('doorPreview').textContent = 'Табличка: ' + text;
+        function resetGermGame() {
+            playClick(440);
+            initGermGame();
         }
 
-        function copyDoorSign() {
-            playClickSound();
-            const textToCopy = `Мое правило: ${currentDoorSign}`;
-            const temp = document.createElement('input');
-            temp.value = textToCopy;
-            document.body.appendChild(temp);
-            temp.select();
-            document.execCommand('copy');
-            document.body.removeChild(temp);
-            document.getElementById('doorPreview').textContent = '✅ Скопировано в буфер: ' + textToCopy;
-        }
+        /* =========================================================
+           9. LEVEL 6: TEEN BATTERY CHARGER
+        ========================================================= */
+        let isCharged = false;
+        function chargeTeenBattery() {
+            playClick(640);
+            markLevelCompleted(6);
+            const card = document.getElementById('teenBatteryCard');
+            const fill = document.getElementById('teenBatteryFill');
+            const text = document.getElementById('teenBatteryText');
+            const sub = document.getElementById('teenBatterySub');
+            const btn = document.getElementById('chargeBtn');
 
-        function addReaction(btn) {
-            playClickSound();
-            const span = btn.querySelector('.val');
-            span.textContent = parseInt(span.textContent) + 1;
-            btn.classList.add('scale-105');
-            setTimeout(() => btn.classList.remove('scale-105'), 180);
-        }
-
-        function activateSupportShield() {
-            playSuccessSound();
-            document.getElementById('shieldInfo').classList.remove('hidden');
-            const btn = document.getElementById('shieldBtn');
-            btn.classList.add('bg-cyber-neonGreen', 'text-black');
-            btn.textContent = '🛡️ ЩИТ САППОРТА ПОЛНОСТЬЮ АКТИВЕН';
-        }
-
-        function celebrateFinale() {
-            playSuccessSound();
-            if (window.confetti) {
-                confetti({
-                    particleCount: 120,
-                    spread: 80,
-                    origin: { y: 0.6 },
-                    colors: ['#05ffa1', '#00e5ff', '#ff2a85', '#ffe600', '#a855f7']
-                });
+            if (!isCharged) {
+                isCharged = true;
+                card.classList.remove('border-red-500/60', 'blink-danger');
+                card.classList.add('border-neonLime/70');
+                fill.classList.remove('bg-red-500');
+                fill.classList.add('bg-neonLime', 'shadow-[0_0_10px_#39ff14]');
+                fill.style.width = '100%';
+                text.classList.remove('text-red-400');
+                text.classList.add('text-neonLime');
+                text.textContent = '100%';
+                sub.textContent = 'Выспался и полон сил! ⚡';
+                btn.textContent = '✅ Батарея заряжена на 100%!';
+                playVictoryChord();
+            } else {
+                isCharged = false;
+                card.classList.add('border-red-500/60', 'blink-danger');
+                card.classList.remove('border-neonLime/70');
+                fill.classList.add('bg-red-500');
+                fill.classList.remove('bg-neonLime', 'shadow-[0_0_10px_#39ff14]');
+                fill.style.width = '6%';
+                text.classList.add('text-red-400');
+                text.classList.remove('text-neonLime');
+                text.textContent = '1%';
+                sub.textContent = 'Силы ушли на рост';
+                btn.textContent = '🔋 Поставить на зарядку (Сон 9–10 ч)';
             }
         }
 
-        function shareLanding() {
-            playClickSound();
+        /* =========================================================
+           10. LEVEL 7: DOOR SIGN GENERATOR
+        ========================================================= */
+        let selectedDoorSign = '🚪 Стучать 3 раза';
+
+        function setDoorSign(signText) {
+            playClick(580);
+            markLevelCompleted(7);
+            selectedDoorSign = signText;
+            document.getElementById('doorSignPreview').textContent = signText;
+        }
+
+        function copyDoorStatus() {
+            playClick(700);
+            markLevelCompleted(7);
+            const message = `Статус моей комнаты: ${selectedDoorSign} (из гайда «Пубертат 2.0»)`;
+            copyTextFallback(message);
+            showToast('📋 Статус скопирован! Можно отправить родителям.');
+        }
+
+        /* =========================================================
+           11. LEVEL 8: REACTION COUNTERS
+        ========================================================= */
+        function incrementReaction(btn) {
+            playClick(660);
+            markLevelCompleted(8);
+            const counter = btn.querySelector('.reaction-count');
+            const current = parseInt(counter.textContent, 10) || 0;
+            counter.textContent = current + 1;
+
+            btn.classList.add('scale-[1.03]');
+            setTimeout(() => btn.classList.remove('scale-[1.03]'), 150);
+        }
+
+        /* =========================================================
+           12. LEVEL 9: SUPPORT SHIELD
+        ========================================================= */
+        function activateShield() {
+            playVictoryChord();
+            markLevelCompleted(9);
+            const btn = document.getElementById('supportShieldBtn');
+            const box = document.getElementById('supportPhraseBox');
+            btn.classList.add('shield-active', 'bg-neonLime', 'text-cyberBg');
+            btn.textContent = '🛡️ САППОРТ АКТИВИРОВАН';
+            box.classList.remove('hidden');
+        }
+
+        /* =========================================================
+           13. LEVEL 10: FULLSCREEN CANVAS CONFETTI FIREWORKS
+        ========================================================= */
+        const confettiParticles = [];
+        let confettiAnimId = null;
+
+        function resizeConfettiCanvas() {
+            const canvas = document.getElementById('confettiCanvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function launchFinaleCelebration() {
+            markLevelCompleted(10);
+            playVictoryChord();
+            showToast('🎉 Обновление принято! С тобой всё в порядке!');
+
+            const canvas = document.getElementById('confettiCanvas');
+            resizeConfettiCanvas();
+            const colors = ['#00f3ff', '#ff007f', '#39ff14', '#b829ff', '#ffe600', '#ffffff'];
+
+            // Spawn bursts from left, right, and center
+            const origins = [
+                { x: canvas.width * 0.2, y: canvas.height * 0.65 },
+                { x: canvas.width * 0.8, y: canvas.height * 0.65 },
+                { x: canvas.width * 0.5, y: canvas.height * 0.45 }
+            ];
+
+            origins.forEach((origin) => {
+                for (let i = 0; i < 45; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 3 + Math.random() * 8;
+                    confettiParticles.push({
+                        x: origin.x,
+                        y: origin.y,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed - 3.5,
+                        size: 5 + Math.random() * 6,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        rotation: Math.random() * 360,
+                        vRot: (Math.random() - 0.5) * 12,
+                        alpha: 1
+                    });
+                }
+            });
+
+            if (!confettiAnimId) {
+                animateConfetti();
+            }
+        }
+
+        function animateConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = confettiParticles.length - 1; i >= 0; i--) {
+                const p = confettiParticles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.18; // gravity
+                p.vx *= 0.99;
+                p.rotation += p.vRot;
+                p.alpha -= 0.008;
+
+                if (p.alpha <= 0 || p.y > canvas.height + 30) {
+                    confettiParticles.splice(i, 1);
+                    continue;
+                }
+
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, p.alpha);
+                ctx.translate(p.x, p.y);
+                ctx.rotate((p.rotation * Math.PI) / 180);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+                ctx.restore();
+            }
+
+            if (confettiParticles.length > 0) {
+                confettiAnimId = requestAnimationFrame(animateConfetti);
+            } else {
+                confettiAnimId = null;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        /* =========================================================
+           14. FOOTER ACTIONS (SHARE & PRINT PDF)
+        ========================================================= */
+        function shareGuide() {
+            playClick(600);
             const url = window.location.href;
             if (navigator.share) {
                 navigator.share({
-                    title: 'Пубертат 2.0: Руководство по выживанию',
+                    title: 'Пубертат 2.0: Инструкция к обновлению',
+                    text: 'Крутой интерактивный гайд про взросление для подростков 10+ и родителей!',
                     url: url
-                }).catch(() => {});
+                }).catch(() => {
+                    copyTextFallback(url);
+                    showToast('🔗 Ссылка скопирована в буфер обмена!');
+                });
             } else {
-                const temp = document.createElement('input');
-                temp.value = url;
-                document.body.appendChild(temp);
-                temp.select();
-                document.execCommand('copy');
-                document.body.removeChild(temp);
-                document.getElementById('doorPreview').scrollIntoView({ behavior: 'smooth' });
+                copyTextFallback(url);
+                showToast('🔗 Ссылка скопирована в буфер обмена!');
             }
         }
+
+        function printGuide() {
+            playClick(500);
+            window.print();
+        }
+
+        /* =========================================================
+           15. INIT ON WINDOW LOAD
+        ========================================================= */
+        window.addEventListener('load', () => {
+            initGermGame();
+            setupScrollObserver();
+            resizeConfettiCanvas();
+        });
+        window.addEventListener('resize', resizeConfettiCanvas);
     </script>
 </body>
 </html>
